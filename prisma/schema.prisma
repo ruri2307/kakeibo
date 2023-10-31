@@ -1,0 +1,26 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model PayOption {
+  id         Int         @id @default(autoincrement())
+  option     String
+  payAmounts PayAmount[]
+}
+
+model PayAmount {
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  pey         Int
+  purpose     String
+  payOption   PayOption @relation(fields: [payOptionId], references: [id])
+  payOptionId Int
+}
