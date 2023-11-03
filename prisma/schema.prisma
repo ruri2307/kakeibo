@@ -14,6 +14,7 @@ model PayOption {
   id         Int         @id @default(autoincrement())
   option     String
   payAmounts PayAmount[]
+  cost       Cost[]
 }
 
 model PayAmount {
@@ -21,6 +22,15 @@ model PayAmount {
   createdAt   DateTime  @default(now())
   pey         Int
   purpose     String
+  payOption   PayOption @relation(fields: [payOptionId], references: [id])
+  payOptionId Int
+}
+
+model Cost {
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  pey         Int
+  purpose     String 
   payOption   PayOption @relation(fields: [payOptionId], references: [id])
   payOptionId Int
 }
